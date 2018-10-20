@@ -21,6 +21,11 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
         nameTextInput.delegate = self
     }
     
+    //让nameLabel显示输入
+    @IBAction func setDefaultName(_ sender: UIButton) {
+        mealNameLabel.text = "Default text"
+    }
+    
      //下面两个遵守成为键盘输入代理的协议的方法
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // Hide the keyboard.
@@ -58,10 +63,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
         dismiss(animated: true, completion: nil)
     }
 
-    //让nameLabel显示输入
-    @IBAction func setDefaultName(_ sender: UIButton) {
-          mealNameLabel.text = "Default text"
-    }
+
 }
 
 
