@@ -9,10 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+    //展示mealname标签
     @IBOutlet weak var mealNameLabel: UILabel!
+    //mealname输入框
     @IBOutlet weak var nameTextInput: UITextField!
-    //选择图片
+    //选择图片按钮
     @IBOutlet weak var photoImageView: UIImageView!
     
     override func viewDidLoad() {
@@ -62,7 +63,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
         photoImageView.image = selectedImage
         dismiss(animated: true, completion: nil)
     }
-
 
 }
 
