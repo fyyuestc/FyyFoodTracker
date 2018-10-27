@@ -15,6 +15,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     @IBOutlet weak var nameTextInput: UITextField!
     //选择图片按钮
     @IBOutlet weak var photoImageView: UIImageView!
+    //评分图标
+    @IBOutlet weak var ratingControl: RatingControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
