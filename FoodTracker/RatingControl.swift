@@ -46,7 +46,7 @@ import UIKit
     }
     
     //Add inspectable properties
-    @IBInspectable var startSiz : CGSize = CGSize(width : 44.0, height:44.0) {
+    @IBInspectable var startSize : CGSize = CGSize(width : 44.0, height:44.0) {
         didSet {
             setUpButtons()
         }
@@ -111,8 +111,8 @@ import UIKit
             button.backgroundColor = UIColor.yellow
             button.translatesAutoresizingMaskIntoConstraints = false
             //添加约束
-            button.heightAnchor.constraint(equalToConstant: startSiz.height).isActive = true
-            button.widthAnchor.constraint(equalToConstant: startSiz.width).isActive = true
+            button.heightAnchor.constraint(equalToConstant: startSize.height).isActive = true
+            button.widthAnchor.constraint(equalToConstant: startSize.width).isActive = true
             //set the accessibility label
             button.accessibilityLabel = "Set \(index) star rating!!!"
             //按钮按下调用的方法
