@@ -42,7 +42,6 @@ class MealTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -51,7 +50,6 @@ class MealTableViewController: UITableViewController {
         return meals.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentity = "MealTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentity, for: indexPath) as? MealTableViewCell else {
@@ -62,10 +60,19 @@ class MealTableViewController: UITableViewController {
         cell.nameLabel.text = meal.name
         cell.photoImageView.image = meal.photo
         cell.ratingControl.ratingScore = meal.rating
-
         return cell
     }
  
+    //与MealViewController中prepare方法对应
+    @IBAction func unwindToMealList(sender: UIStoryboardSegue){
+        //需要强制转换因为sender.source是UIViewController类型,传递是meal数据
+        if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            //Add a new meal，计算新的table view cell插入的位置
+            let newIndexPath = IndexPath(row: meals.count, section: 0)
+            meals.append(meal)
+            tableView.insertRows(at: [newIndexPath], with: .automatic)
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
