@@ -8,9 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    //展示mealname标签
-    @IBOutlet weak var mealNameLabel: UILabel!
+class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     //mealname输入框
     @IBOutlet weak var nameTextInput: UITextField!
     //选择图片按钮
@@ -20,13 +18,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //让viewController成为代理
+        //让MealviewController成为代理
         nameTextInput.delegate = self
-    }
-    
-    //让nameLabel显示输入
-    @IBAction func setDefaultName(_ sender: UIButton) {
-        mealNameLabel.text = "Default text"
     }
     
      //下面两个遵守成为键盘输入代理的协议的方法
@@ -36,7 +29,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
         return true
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
-        mealNameLabel.text = textField.text
     }
     
     //添加手势
@@ -46,7 +38,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
         let imagePickerController = UIImagePickerController()
         //选择类型
         imagePickerController.sourceType = .photoLibrary
-        //让viewController成为代理
+        //让MealviewController成为代理
         imagePickerController.delegate = self
         present(imagePickerController, animated: true, completion: nil)
     }

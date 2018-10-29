@@ -44,24 +44,28 @@ class MealTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return meals.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cellIdentity = "MealTableViewCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentity, for: indexPath) as? MealTableViewCell else {
+            fatalError("所选择的cell不是MealTableViewCell的实例")
+        }
+        let meal = meals[indexPath.row]
+        //Configure the cell
+        cell.nameLabel.text = meal.name
+        cell.photoImageView.image = meal.photo
+        cell.ratingControl.ratingScore = meal.rating
 
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.
