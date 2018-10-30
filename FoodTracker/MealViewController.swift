@@ -29,6 +29,14 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         super.viewDidLoad()
         //让MealviewController成为代理
         nameTextInput.delegate = self
+        //使MealViewController在TableView中可以编辑
+        //Set up views if editing an existing Meal
+        if let editMeal = meal {
+            navigationItem.title = meal?.name
+            nameTextInput.text = meal?.name
+            photoImageView.image = meal?.photo
+            ratingControl.ratingScore = (meal?.rating)!
+        }
         updateSaveButtonState()
     }
     

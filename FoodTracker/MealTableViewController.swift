@@ -6,6 +6,7 @@
 //  Copyright © 2018年 Apple Inc. All rights reserved.
 //
 
+import os.log
 import UIKit
 
 class MealTableViewController: UITableViewController {
@@ -49,7 +50,7 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
     }
-
+    //选择table view中的cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentity = "MealTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentity, for: indexPath) as? MealTableViewCell else {
@@ -67,13 +68,51 @@ class MealTableViewController: UITableViewController {
     @IBAction func unwindToMealList(sender: UIStoryboardSegue){
         //需要强制转换因为sender.source是UIViewController类型,传递是meal数据
         if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            if let selectIndexPath = tableView.indexPathForSelectedRow {
+                //更新编辑后的meal
+                meals[selectIndexPath.row] = meal
+                tableView.reloadRows(at: [selectIndexPath], with: .none)
+            }
             //Add a new meal，计算新的table view cell插入的位置
-            let newIndexPath = IndexPath(row: meals.count, section: 0)
-            meals.append(meal)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            else {
+                let newIndexPath = IndexPath(row: meals.count, section: 0)
+                meals.append(meal)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
         }
     }
 
+     // 本方法判断哪一个segue会响应(用户是编辑还是新增一个table view cell)
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        //根据identifier来判断segue
+        switch (segue.identifier ?? "") {
+        case "addItem":
+            os_log("正在增加新的一个meal", log: OSLog.default, type: .debug)
+        case "showDetail":
+            guard let mealDetailViewController = segue.destination as? MealViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            guard let selectedMealCell = sender as? MealTableViewCell else {
+                fatalError("Unexpecte sender: \(String(describing: sender))")
+            }
+            guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+                fatalError("所选择的cell不在tableView里")
+            }
+            //得到选择的meal和Controller
+            //As soon as you have the index path,you can look up the meal object for that path and pass it to the destination view controller
+            let selectedMeal = meals[indexPath.row]
+            mealDetailViewController.meal = selectedMeal
+        default:
+            fatalError("Unexpected segue identifier")
+        }
+     }
+    
+
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -106,16 +145,6 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
     */
 
