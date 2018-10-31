@@ -50,7 +50,7 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
     }
-    //选择table view中的cell
+    //显示table view中的cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentity = "MealTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentity, for: indexPath) as? MealTableViewCell else {
@@ -90,7 +90,7 @@ class MealTableViewController: UITableViewController {
         super.prepare(for: segue, sender: sender)
         //根据identifier来判断segue
         switch (segue.identifier ?? "") {
-        case "addItem":
+        case "AddItem":
             os_log("正在增加新的一个meal", log: OSLog.default, type: .debug)
         case "showDetail":
             guard let mealDetailViewController = segue.destination as? MealViewController else {

@@ -109,10 +109,10 @@ import UIKit
             button.setImage(highlightStar, for: .highlighted)
             button.setImage(highlightStar, for: [.highlighted,.selected])
             button.backgroundColor = UIColor.yellow
-            button.translatesAutoresizingMaskIntoConstraints = false
-            //添加约束
-            button.heightAnchor.constraint(equalToConstant: startSize.height).isActive = true
-            button.widthAnchor.constraint(equalToConstant: startSize.width).isActive = true
+            //因为是stack view 所以不用自己加约束，否则会冲突
+            //button.translatesAutoresizingMaskIntoConstraints = false
+            //button.heightAnchor.constraint(equalToConstant: startSize.height).isActive = true
+            //button.widthAnchor.constraint(equalToConstant: startSize.width).isActive = true
             //set the accessibility label
             button.accessibilityLabel = "Set \(index) star rating!!!"
             //按钮按下调用的方法
