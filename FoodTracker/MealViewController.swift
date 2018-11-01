@@ -20,7 +20,20 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var saveButton: UIBarButtonItem!
     //取消按钮
     @IBAction func cancel(_ sender: UIBarButtonItem) {
-        dismiss(animated: true, completion: nil)
+        //因为有两种进入此viewController的方式，第一种是编辑，另一种是增加
+        //是否为addMeal的界面
+        let isPresentingAddMeal = presentingViewController is UINavigationController
+        //如果是add页面
+        if isPresentingAddMeal {
+            dismiss(animated: true, completion: nil)
+        }
+        //如果是edit页面
+        else if let owningNavigationController = navigationController {
+            owningNavigationController.popViewController(animated: true)
+        }
+        else{
+            fatalError("mealViewController没有在导航控制器中！！！")
+        }
     }
     //Meal类对象
     var meal : Meal?
