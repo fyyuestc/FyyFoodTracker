@@ -12,7 +12,8 @@ import UIKit
 class MealTableViewController: UITableViewController {
     
     var meals = [Meal]()
-    private func loadMeals(){
+    //加载默认的3个菜单
+    private func loadDefaltMeals(){
         let photo1 = UIImage(named: "meal1")
         let photo2 = UIImage(named: "meal2")
         let photo3 = UIImage(named: "meal3")
@@ -27,14 +28,36 @@ class MealTableViewController: UITableViewController {
         }
         meals += [meal1,meal2,meal3]
     }
+    
+    //保存菜单数据至文件URL中
+    private func saveMeals(){
+        //meals是否被存入文件的标志
+        let successForSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.DocumentsDirectory.path)
+        if successForSave {
+            os_log("Meals 保存成功", log: OSLog.default, type: .debug)
+        }else {
+             os_log("Meals 保存失败", log: OSLog.default, type: .error)
+        }
+    }
+    
+    //加载文件中所有菜单数据至程序中
+    private func loadMeals() -> [Meal]? {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.DocumentsDirectory.path) as? [Meal]
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Meal.storeURL)
         //增加edit按钮
         self.navigationItem.leftBarButtonItem = self.editButtonItem
-        loadMeals()
+        //文件中有数据时则加载,否则加载默认菜单数据
+        if let mealsInFile = loadMeals() {
+            meals += mealsInFile
+        }else {
+            loadDefaltMeals()
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     }
 
@@ -51,7 +74,8 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return meals.count
     }
-    //显示table view中的cell
+    
+    //显示table view中的所有cell
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentity = "MealTableViewCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentity, for: indexPath) as? MealTableViewCell else {
@@ -80,6 +104,8 @@ class MealTableViewController: UITableViewController {
                 meals.append(meal)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+            //更新后保存数据至文件
+            saveMeals()
         }
     }
 
@@ -123,6 +149,8 @@ class MealTableViewController: UITableViewController {
         if editingStyle == .delete {
             // 删除选择的那一行cell
             meals.remove(at: indexPath.row)
+            //更新后保存数据至文件
+            saveMeals()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
