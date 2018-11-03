@@ -32,7 +32,7 @@ class MealTableViewController: UITableViewController {
     //保存菜单数据至文件URL中
     private func saveMeals(){
         //meals是否被存入文件的标志
-        let successForSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.DocumentsDirectory.path)
+        let successForSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.storeURL.path)
         if successForSave {
             os_log("Meals 保存成功", log: OSLog.default, type: .debug)
         }else {
@@ -42,7 +42,7 @@ class MealTableViewController: UITableViewController {
     
     //加载文件中所有菜单数据至程序中
     private func loadMeals() -> [Meal]? {
-        return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.DocumentsDirectory.path) as? [Meal]
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Meal.storeURL.path) as? [Meal]
     }
     
     override func viewDidLoad() {
