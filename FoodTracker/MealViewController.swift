@@ -114,6 +114,7 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let rating = ratingControl.ratingScore
         //Set the meal to be passed to MealTableViewController after the un
         meal = Meal(name: name, photo: photo, rating: rating)
+        print("save button clicked!")
     }
 
 }

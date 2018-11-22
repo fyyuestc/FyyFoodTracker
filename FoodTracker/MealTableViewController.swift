@@ -93,8 +93,10 @@ class MealTableViewController: UITableViewController {
     @IBAction func unwindToMealList(sender: UIStoryboardSegue){
         //需要强制转换因为sender.source是UIViewController类型,传递是meal数据
         if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            print("first if")
             if let selectIndexPath = tableView.indexPathForSelectedRow {
                 //更新编辑后的meal
+                print("second if")
                 meals[selectIndexPath.row] = meal
                 tableView.reloadRows(at: [selectIndexPath], with: .none)
             }
@@ -103,10 +105,12 @@ class MealTableViewController: UITableViewController {
                 let newIndexPath = IndexPath(row: meals.count, section: 0)
                 meals.append(meal)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
+                print("Add a meal success")
             }
             //更新后保存数据至文件
             saveMeals()
         }
+        print("func unwind")
     }
 
      // 本方法判断哪一个segue会响应(用户是编辑还是新增一个table view cell)
