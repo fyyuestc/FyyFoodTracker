@@ -93,6 +93,8 @@ import UIKit
             removeArrangedSubview(button)
             //清除视图
             button.removeFromSuperview()
+            //最终要清除这个数组
+            ratingButtons.removeAll()
         }
         //加载按钮图像，ensure the system can find and load the image
         //means that the app can load th images using the UImage()

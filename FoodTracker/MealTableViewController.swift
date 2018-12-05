@@ -89,7 +89,7 @@ class MealTableViewController: UITableViewController {
         return cell
     }
  
-    //与MealViewController中prepare方法对应
+    //与MealViewController中prepare方法对应(反向传参)
     @IBAction func unwindToMealList(sender: UIStoryboardSegue){
         //需要强制转换因为sender.source是UIViewController类型,传递是meal数据
         if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
@@ -113,7 +113,7 @@ class MealTableViewController: UITableViewController {
         print("func unwind")
     }
 
-     // 本方法判断哪一个segue会响应(用户是编辑还是新增一个table view cell)
+     // 本方法判断哪一个segue会响应(用户是编辑还是新增一个table view cell)（正向传参）
      // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
